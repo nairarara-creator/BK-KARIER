@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BK CAREER EXPLORER - Kenali Dirimu, Rencanakan Masa Depanmu</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tealbrand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        skybrand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        indigobrand: {
+                            50: '#eep2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        warmbg: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .soft-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s ease-in-out;
+        }
+        .soft-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.06);
+        }
+        .option-card.selected {
+            border-color: #0d9488;
+            background-color: #f0fdfa;
+            box-shadow: 0 0 0 2px #0d9488;
+        }
+        .drawing-card svg { width: 100%; height: 170px; display: block; }
+        .quiz-result { animation: resultIn .25s ease-out; }
+        @keyframes resultIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        @media print {
+            .no-print { display: none !important; }
+            .print-area { display: block !important; width: 100% !important; margin: 0 !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-tealbrand-100 selection:text-tealbrand-700">
+
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/80 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                    <div class="w-10 h-10 rounded-2xl bg-tealbrand-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-extrabold text-slate-800 tracking-tight block leading-none">BK CAREER</span>
+                        <span class="text-xs font-semibold text-tealbrand-600 tracking-wider uppercase">Explorer Kelas IX</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <button onclick="showSection('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Beranda</button>
+                    <button onclick="showSection('kenalidir')" id="nav-kenalidir" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Kenali Diri</button>
+                    <button onclick="showSection('karier')" id="nav-karier" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Eksplorasi Karier</button>
+                    <button onclick="showSection('sekolah')" id="nav-sekolah" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Sekolah Lanjutan</button>
+                    <button onclick="showSection('hubungkan')" id="nav-hubungkan" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Hubungkan</button>
+                    <button onclick="showSection('path')" id="nav-path" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">My Career Path</button>
+                    <button onclick="showSection('kuis')" id="nav-kuis" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Kuis</button>
+                    <button onclick="showSection('refleksi')" id="nav-refleksi" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Refleksi</button>
+                    <button onclick="showSection('mynextstep')" id="nav-mynextstep" class="nav-btn px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-tealbrand-600 hover:bg-slate-50 transition">Next Step</button>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="lg:hidden">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="showSection('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Beranda</button>
+            <button onclick="showSection('kenalidir'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Kenali Diri</button>
+            <button onclick="showSection('karier'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Eksplorasi Karier</button>
+            <button onclick="showSection('sekolah'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Sekolah Lanjutan</button>
+            <button onclick="showSection('hubungkan'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Hubungkan Karier & Sekolah</button>
+            <button onclick="showSection('path'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">My Career Path</button>
+            <button onclick="showSection('kuis'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Kuis Situasional</button>
+            <button onclick="showSection('refleksi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700">Refleksi</button>
+            <button onclick="showSection('mynextstep'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-tealbrand-600 font-bold">My Next Step</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <section id="sec-home" class="space-y-12">
+            <div class="bg-gradient-to-br from-tealbrand-50 via-skybrand-50 to-warmbg rounded-3xl p-8 sm:p-12 border border-tealbrand-100 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-sm">
+                <div class="md:w-7/12 space-y-5 z-10">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-tealbrand-200 text-tealbrand-700 text-xs font-semibold">
+                        <i class="fa-solid fa-graduation-cap"></i> Layanan Bimbingan Konseling SMP Class IX
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
+                        Masa Depanmu Dimulai dari <span class="text-tealbrand-600">Eksplorasi</span>
+                    </h1>
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+                        Kenali apa yang kamu sukai, temukan berbagai pilihan karier, dan eksplorasi sekolah lanjutan (SMA, SMK, MA) yang dapat mendukung tujuanmu!
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <button onclick="showSection('kenalidir')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3.5 rounded-2xl font-bold shadow-md hover:shadow-lg transition flex items-center gap-2 text-sm">
+                            <span>🚀 MULAI EKSPLORASI</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="md:w-5/12 z-10 w-full">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Siswa SMP Eksplorasi" class="rounded-3xl shadow-lg border-4 border-white object-cover h-64 sm:h-80 w-full">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div onclick="showSection('kenalidir')" class="soft-card p-6 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-tealbrand-50 text-tealbrand-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                        🧠
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 group-hover:text-tealbrand-600 transition">Kenali Dirimu</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">Kenali minat, kemampuan, nilai, dan gaya belajarmu secara bertahap.</p>
+                </div>
+
+                <div onclick="showSection('karier')" class="soft-card p-6 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-skybrand-50 text-skybrand-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                        🔎
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 group-hover:text-tealbrand-600 transition">Eksplorasi Karier</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">Temukan berbagai bidang pekerjaan dan profesi populer masa depan.</p>
+                </div>
+
+                <div onclick="showSection('sekolah')" class="soft-card p-6 rounded-2xl cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-indigobrand-50 text-indigobrand-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+                        🏫
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 group-hover:text-tealbrand-600 transition">Kenali Sekolah Lanjutan</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">Pelajari pilihan pendidikan setelah SMP: SMA, SMK, atau MA.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-kenalidir" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Sebelum Memilih, Kenali Dirimu</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Mengenali diri membantu kamu mempertimbangkan pilihan pendidikan dan karier secara lebih sadar.</p>
+            </div>
+
+            <!-- Stepper Indicator -->
+            <div class="max-w-4xl mx-auto bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between text-xs font-semibold">
+                    <div id="step-dot-1" class="flex items-center gap-2 text-tealbrand-600">
+                        <span class="w-7 h-7 rounded-full bg-tealbrand-600 text-white flex items-center justify-center font-bold">1</span>
+                        <span class="hidden sm:inline">Minat</span>
+                    </div>
+                    <div class="h-0.5 flex-1 bg-slate-200 mx-2"></div>
+                    <div id="step-dot-2" class="flex items-center gap-2 text-slate-400">
+                        <span class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">2</span>
+                        <span class="hidden sm:inline">Kemampuan</span>
+                    </div>
+                    <div class="h-0.5 flex-1 bg-slate-200 mx-2"></div>
+                    <div id="step-dot-3" class="flex items-center gap-2 text-slate-400">
+                        <span class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">3</span>
+                        <span class="hidden sm:inline">Nilai Diri</span>
+                    </div>
+                    <div class="h-0.5 flex-1 bg-slate-200 mx-2"></div>
+                    <div id="step-dot-4" class="flex items-center gap-2 text-slate-400">
+                        <span class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">4</span>
+                        <span class="hidden sm:inline">Gaya Diri</span>
+                    </div>
+                    <div class="h-0.5 flex-1 bg-slate-200 mx-2"></div>
+                    <div id="step-dot-5" class="flex items-center gap-2 text-slate-400">
+                        <span class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">5</span>
+                        <span class="hidden sm:inline">Rangkuman</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wizard Step 1: Minat -->
+            <div id="wizard-step-1" class="wizard-step space-y-6 max-w-4xl mx-auto">
+                <div class="bg-tealbrand-50 p-6 rounded-2xl border border-tealbrand-100 space-y-2">
+                    <h3 class="text-xl font-bold text-slate-800">❤️ A. MINAT: Apa yang membuatmu tertarik?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Minat adalah ketertarikan terhadap aktivitas atau bidang tertentu yang membuat seseorang merasa senang untuk mempelajarinya atau melakukannya.
+                    </p>
+                    <p class="text-xs font-semibold text-tealbrand-700">Pilih 1 - 3 minat yang paling mendeskripsikan dirimu:</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="minat-options">
+                    <!-- Cards populated via JS -->
+                </div>
+
+                <!-- Detail Penjelasan Opsi Terpilih -->
+                <div id="minat-detail-box" class="p-4 bg-white border border-slate-200 rounded-2xl hidden text-xs text-slate-600 space-y-2">
+                    <h4 class="font-bold text-slate-800">Detail Pilihan Minatmu:</h4>
+                    <p id="minat-detail-text"></p>
+                </div>
+
+                <div class="flex justify-end">
+                    <button onclick="nextWizardStep(2)" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-6 py-3 rounded-xl font-semibold text-xs flex items-center gap-2">
+                        <span>Lanjut ke Kemampuan</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wizard Step 2: Kemampuan -->
+            <div id="wizard-step-2" class="wizard-step hidden space-y-6 max-w-4xl mx-auto">
+                <div class="bg-skybrand-50 p-6 rounded-2xl border border-skybrand-100 space-y-2">
+                    <h3 class="text-xl font-bold text-slate-800">💪 B. KEMAMPUAN: Apa yang cukup kamu kuasai?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Kemampuan berkaitan dengan hal-hal yang dapat dilakukan atau dipelajari seseorang dengan baik. Ingat: Kemampuan bukan sesuatu yang tetap, tapi dapat berkembang melalui latihan!
+                    </p>
+                    <p class="text-xs font-semibold text-skybrand-700">Pilih kemampuan utama yang saat ini paling kamu kuasai:</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="kemampuan-options">
+                    <!-- Cards populated via JS -->
+                </div>
+
+                <div id="kemampuan-detail-box" class="p-4 bg-white border border-slate-200 rounded-2xl hidden text-xs text-slate-600 space-y-2">
+                    <h4 class="font-bold text-slate-800">Detail Kemampuanmu:</h4>
+                    <p id="kemampuan-detail-text"></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="nextWizardStep(1)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-3 rounded-xl font-semibold text-xs">← Kembali</button>
+                    <button onclick="nextWizardStep(3)" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-6 py-3 rounded-xl font-semibold text-xs flex items-center gap-2">
+                        <span>Lanjut ke Nilai Diri</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wizard Step 3: Nilai Diri -->
+            <div id="wizard-step-3" class="wizard-step hidden space-y-6 max-w-4xl mx-auto">
+                <div class="bg-indigobrand-50 p-6 rounded-2xl border border-indigobrand-100 space-y-2">
+                    <h3 class="text-xl font-bold text-slate-800">⭐ C. NILAI DIRI: Apa yang penting bagimu?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Nilai adalah hal-hal yang dianggap penting dan ingin dipertimbangkan seseorang dalam belajar maupun bekerja kelak.
+                    </p>
+                    <p class="text-xs font-semibold text-indigobrand-700">Pilih nilai utama yang paling penting bagimu:</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="nilai-options">
+                    <!-- Cards populated via JS -->
+                </div>
+
+                <div id="nilai-detail-box" class="p-4 bg-white border border-slate-200 rounded-2xl hidden text-xs text-slate-600 space-y-2">
+                    <h4 class="font-bold text-slate-800">Detail Nilai Diri:</h4>
+                    <p id="nilai-detail-text"></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="nextWizardStep(2)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-3 rounded-xl font-semibold text-xs">← Kembali</button>
+                    <button onclick="nextWizardStep(4)" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-6 py-3 rounded-xl font-semibold text-xs flex items-center gap-2">
+                        <span>Lanjut ke Gaya Diri</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wizard Step 4: Gaya Diri -->
+            <div id="wizard-step-4" class="wizard-step hidden space-y-6 max-w-4xl mx-auto">
+                <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100 space-y-2">
+                    <h3 class="text-xl font-bold text-slate-800">😊 D. GAYA DIRI: Bagaimana kamu nyaman belajar & bekerja?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Gaya diri menunjukkan lingkungan dan cara belajar yang paling membuatmu merasa nyaman dan produktif.
+                    </p>
+                    <p class="text-xs font-semibold text-purple-700">Pilih gaya belajar / kerja yang paling kamu sukai:</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="gaya-options">
+                    <!-- Cards populated via JS -->
+                </div>
+
+                <div id="gaya-detail-box" class="p-4 bg-white border border-slate-200 rounded-2xl hidden text-xs text-slate-600 space-y-2">
+                    <h4 class="font-bold text-slate-800">Detail Gaya Diri:</h4>
+                    <p id="gaya-detail-text"></p>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="nextWizardStep(3)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-3 rounded-xl font-semibold text-xs">← Kembali</button>
+                    <button onclick="nextWizardStep(5)" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-6 py-3 rounded-xl font-semibold text-xs flex items-center gap-2">
+                        <span>Lihat Rangkuman Diri</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wizard Step 5: Rangkuman Kenali Diri -->
+            <div id="wizard-step-5" class="wizard-step hidden space-y-6 max-w-4xl mx-auto">
+                <div class="text-center space-y-2">
+                    <h3 class="text-2xl font-bold text-slate-800">🎉 Rangkuman Refleksi Kenali Diri</h3>
+                    <p class="text-xs text-slate-500">Berikut adalah cerminan potensi dan preferensi awal yang sudah kamu pilih.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 bg-white border border-slate-200 rounded-2xl space-y-2 shadow-sm">
+                        <span class="text-xs font-bold text-tealbrand-600 uppercase">Minat Terpilih:</span>
+                        <p id="summary-minat" class="text-sm font-semibold text-slate-800">Belum memilih</p>
+                    </div>
+                    <div class="p-5 bg-white border border-slate-200 rounded-2xl space-y-2 shadow-sm">
+                        <span class="text-xs font-bold text-skybrand-600 uppercase">Kemampuan Utama:</span>
+                        <p id="summary-kemampuan" class="text-sm font-semibold text-slate-800">Belum memilih</p>
+                    </div>
+                    <div class="p-5 bg-white border border-slate-200 rounded-2xl space-y-2 shadow-sm">
+                        <span class="text-xs font-bold text-indigobrand-600 uppercase">Nilai Diri Pilihan:</span>
+                        <p id="summary-nilai" class="text-sm font-semibold text-slate-800">Belum memilih</p>
+                    </div>
+                    <div class="p-5 bg-white border border-slate-200 rounded-2xl space-y-2 shadow-sm">
+                        <span class="text-xs font-bold text-purple-600 uppercase">Gaya Diri Disukai:</span>
+                        <p id="summary-gaya" class="text-sm font-semibold text-slate-800">Belum memilih</p>
+                    </div>
+                </div>
+
+                <!-- Disclaimer BK Box -->
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg mt-0.5"></i>
+                    <div>
+                        <strong>Catatan Penting Guru BK:</strong>
+                        <p class="mt-0.5">Hasil eksplorasi ini bukan diagnosis atau tes psikologis mutlak. Gunakan sebagai bahan untuk mengenal diri dan mencari informasi lebih lanjut!</p>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-between items-center border-t border-slate-200">
+                    <button onclick="nextWizardStep(4)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-3 rounded-xl font-semibold text-xs">← Ubah Jawaban</button>
+                    <button onclick="showSection('karier')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-8 py-3.5 rounded-2xl font-bold text-xs shadow-md hover:shadow-lg transition flex items-center gap-2">
+                        <span>Lanjut ke Eksplorasi Karier 🚀</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-karier" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Dunia Karier Itu Luas</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Klik kartu bidang karier untuk mengenal contoh profesi, karakteristik, dan kuis kecocokannya!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="career-grid-cards">
+                <!-- 6 Careers Rendered by JS -->
+            </div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('sekolah')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke Kenali Sekolah Lanjutan</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-sekolah" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Setelah SMP, Pilihanku Apa?</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">SMA, SMK, dan MA memiliki karakteristik masing-masing. Tidak ada yang paling baik secara mutlak, pilihlah yang sesuai dengan minat dan tujuanmu!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- SMA Card -->
+                <div class="soft-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="SMA" class="h-44 w-full object-cover">
+                        <div class="p-6 space-y-3">
+                            <span class="bg-skybrand-100 text-skybrand-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Akademik & Umum</span>
+                            <h3 class="text-xl font-bold text-slate-800">SMA (Sekolah Menengah Atas)</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Pilihan bagi kamu yang ingin belajar ilmu pengetahuan umum secara mendalam dan berencana melanjutkan kuliah ke perguruan tinggi.</p>
+                            <p class="text-xs italic text-slate-500 font-medium">"Bidang pelajaran apa yang paling ingin saya kembangkan?"</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectSchoolGoal('SMA')" class="w-full py-2.5 bg-skybrand-600 hover:bg-skybrand-700 text-white rounded-xl text-xs font-semibold transition">Eksplorasi SMA</button>
+                    </div>
+                </div>
+
+                <!-- SMK Card -->
+                <div class="soft-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="SMK" class="h-44 w-full object-cover">
+                        <div class="p-6 space-y-3">
+                            <span class="bg-tealbrand-100 text-tealbrand-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Kejuruan & Praktik</span>
+                            <h3 class="text-xl font-bold text-slate-800">SMK (Sekolah Menengah Kejuruan)</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Pilihan tepat jika kamu menyukai pembelajaran praktik dan ingin langsung menguasai keahlian khusus siap kerja/berwirausaha.</p>
+                            <p class="text-xs italic text-slate-500 font-medium">"Bidang keahlian apa yang ingin saya pelajari lebih dalam?"</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectSchoolGoal('SMK')" class="w-full py-2.5 bg-tealbrand-600 hover:bg-tealbrand-700 text-white rounded-xl text-xs font-semibold transition">Eksplorasi SMK</button>
+                    </div>
+                </div>
+
+                <!-- MA Card -->
+                <div class="soft-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" alt="MA" class="h-44 w-full object-cover">
+                        <div class="p-6 space-y-3">
+                            <span class="bg-indigobrand-100 text-indigobrand-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Religi & Sains</span>
+                            <h3 class="text-xl font-bold text-slate-800">MA (Madrasah Aliyah)</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Pendidikan menengah umum yang dipadukan dengan nilai-nilai agama Islam yang mendalam untuk pembentukan karakter unggul.</p>
+                            <p class="text-xs italic text-slate-500 font-medium">"Lingkungan pendidikan seperti apa yang sesuai denganku?"</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectSchoolGoal('MA')" class="w-full py-2.5 bg-indigobrand-600 hover:bg-indigobrand-700 text-white rounded-xl text-xs font-semibold transition">Eksplorasi MA</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('hubungkan')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke Hubungkan Karier & Sekolah</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-hubungkan" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Dari "Aku Suka Apa?" ke "Aku Mau Eksplorasi Apa?"</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Jalur pendidikan menuju karier tidak selalu tunggal. Berikut adalah contoh pemetaan yang dapat kamu pelajari:</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-bold">
+                            <tr>
+                                <th class="p-4">Jika Tertarik Pada...</th>
+                                <th class="p-4">Bidang Karier</th>
+                                <th class="p-4">Contoh Pilihan Sekolah yang Dapat Dieksplorasi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Teknologi & Komputer</td>
+                                <td class="p-4">IT & Digital</td>
+                                <td class="p-4">SMA (IPA/Saintek) / SMK (RPL, TKJ, Animation) / MA</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Menggambar & Desain</td>
+                                <td class="p-4">Seni & Kreatif</td>
+                                <td class="p-4">SMA (IPS/Seni) / SMK (DKV, Seni Rupa, Desain Busana) / MA</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Membantu & Mengajar</td>
+                                <td class="p-4">Sosial & Pendidikan</td>
+                                <td class="p-4">SMA (IPS/Bahasa) / MA / SMK (Keperawatan/Sosial)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Sains & Kesehatan</td>
+                                <td class="p-4">Kesehatan & Laboratorium</td>
+                                <td class="p-4">SMA (IPA) / MA (Kemenag) / SMK (Farmasi, Analis Kesehatan)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Bisnis & Menjual</td>
+                                <td class="p-4">Bisnis & Kewirausahaan</td>
+                                <td class="p-4">SMA (IPS) / SMK (Pemasaran, Akuntansi, Perhotelan) / MA</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">Mesin & Perbaikan</td>
+                                <td class="p-4">Teknik & Keterampilan</td>
+                                <td class="p-4">SMK (Otomotif, Mesin, Listrik) / SMA (IPA)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('path')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke My Career Path</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-path" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Fitur "My Career Path"</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Rencanakan alur langkah eksplorasimu dalam 3 langkah interaktif ringkas!</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold text-slate-700 uppercase">STEP 1: Bidang Karier Impian</label>
+                    <input type="text" id="path-input-career" placeholder="Contoh: UI/UX Designer, Dokter, Entrepreneur..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none">
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold text-slate-700 uppercase">STEP 2: Rencana Sekolah Lanjutan Pasca SMP</label>
+                    <select id="path-select-school" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none">
+                        <option value="">-- Pilih Sekolah Lanjutan --</option>
+                        <option value="SMA">SMA (Sekolah Menengah Atas)</option>
+                        <option value="SMK">SMK (Sekolah Menengah Kejuruan)</option>
+                        <option value="MA">MA (Madrasah Aliyah)</option>
+                        <option value="Masih Mencari Informasi">Masih Ingin Mencari Informasi Lebih Lanjut</option>
+                    </select>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold text-slate-700 uppercase">STEP 3: Langkah Pertama Yang Akan Dilakukan Bulan Ini</label>
+                    <textarea id="path-input-action" rows="3" placeholder="Contoh: Diskusi dengan orang tua, latihan matematika 20 menit/hari, cari tahu info SMK DKV..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none"></textarea>
+                </div>
+
+                <button onclick="savePathData()" class="w-full py-3.5 bg-tealbrand-600 hover:bg-tealbrand-700 text-white font-bold rounded-xl text-xs shadow-md transition">Simpan Career Path Saya</button>
+            </div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('kuis')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke Kuis Karier</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-kuis" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Kuis Situasional Pemahaman Karier</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Jawab 8 soal berikut untuk menguji pemahamanmu mengenai perencanaan karier dan sekolah lanjutan!</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6" id="quiz-box">
+                <!-- Quiz rendered by JS -->
+            </div>
+            <div id="quiz-result" class="max-w-3xl mx-auto hidden"></div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('refleksi')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke Form Refleksi Diri</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-refleksi" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-800">Pause & Reflect</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Sekarang waktunya melihat kembali apa yang sudah kamu temukan tentang dirimu.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6" id="reflection-container">
+                <!-- Reflection Form Rendered by JS -->
+            </div>
+
+            <div class="pt-6 flex justify-end">
+                <button onclick="showSection('mynextstep')" class="bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-7 py-3 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-sm">
+                    <span>Lanjut ke My Next Step 🚀</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-mynextstep" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2 no-print">
+                <h2 class="text-3xl font-extrabold text-slate-800">MY NEXT STEP</h2>
+                <p class="text-slate-600 text-xs sm:text-sm">Kamu tidak harus mengetahui seluruh masa depanmu sekarang. Yang penting, kamu sudah mulai mengeksplorasi!</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white border border-slate-200 p-8 rounded-2xl space-y-6 shadow-sm print-area">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800">LEMBAR PERENCANAAN ADIRI SAYA</h3>
+                        <p class="text-xs font-semibold text-tealbrand-600">BK CAREER EXPLORER - KELAS IX SMP</p>
+                    </div>
+                    <div class="text-right text-xs text-slate-400" id="print-date">Date: -</div>
+                </div>
+
+                <div class="p-4 bg-tealbrand-50 border border-tealbrand-100 rounded-xl space-y-2">
+                    <span class="font-bold text-tealbrand-800 uppercase text-xs">Identitas Siswa</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <p><span class="font-semibold text-slate-600">Nama:</span> <span id="res-student-name">-</span></p>
+                        <p><span class="font-semibold text-slate-600">Kelas:</span> <span id="res-student-class">-</span></p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-1">
+                        <span class="font-bold text-slate-700 uppercase">1. Profil Diri Terpilih:</span>
+                        <p id="res-minat">Minat: -</p>
+                        <p id="res-kemampuan">Kemampuan: -</p>
+                        <p id="res-nilai">Nilai Diri: -</p>
+                        <p id="res-gaya">Gaya Diri: -</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-1">
+                        <span class="font-bold text-slate-700 uppercase">2. Target Karier & Sekolah Lanjutan:</span>
+                        <p id="res-career">Bidang Karier Impian: -</p>
+                        <p id="res-school">Rencana Sekolah Lanjutan: -</p>
+                        <p id="res-action">Langkah Pertama Bulan Ini: -</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-1">
+                        <span class="font-bold text-slate-700 uppercase">3. Skor Kuis & Pemahaman:</span>
+                        <p id="res-quiz-score">Belum menyelesaikan kuis</p>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-tealbrand-50 border border-tealbrand-100 rounded-xl text-xs text-tealbrand-800 space-y-1">
+                    <strong>🚀 Langkah Kecil, Eksplorasi Besar!</strong>
+                    <p>Pilihan pendidikan adalah proses yang dapat dipertimbangkan kembali seiring bertambahnya pengalaman. Diskusikan lembar ini dengan Guru BK dan orang tua/walimu!</p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 flex justify-between items-center no-print">
+                    <span class="text-xs text-slate-400">Siap dicetak sebagai bukti aktivitas layanan BK.</span>
+                    <button onclick="window.print()" class="px-6 py-3 bg-tealbrand-600 hover:bg-tealbrand-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak / Simpan PDF</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Detail Bidang Karier -->
+    <div id="career-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <button onclick="closeCareerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div id="modal-career-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-5 py-3 rounded-2xl text-xs font-semibold shadow-lg hidden z-50">
+        Message
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 no-print">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
+            <p>© 2026 BK CAREER EXPLORER - Bimbingan & Konseling Kelas IX SMP. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // State Storage
+        const state = {
+            minat: [],
+            kemampuan: '',
+            nilai: '',
+            gaya: '',
+            careerDream: '',
+            schoolGoal: '',
+            actionPlan: '',
+            quizAnswers: {},
+            quizScore: null,
+            quizWrong: [],
+            studentName: '',
+            studentClass: '',
+            reflections: {}
+        };
+
+        // Data Source Kenali Diri Options with high quality imagery
+        const minatOptionsData = [
+            { id: 'm1', label: 'Perangkat & Teknologi', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80', desc: 'Suka mengoperasikan komputer, game, koding, atau teknologi digital.' },
+            { id: 'm2', label: 'Seni & Kreatif', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80', desc: 'Suka menggambar, melukis, desain visual, musik, atau fotografi.' },
+            { id: 'm3', label: 'Membantu Orang Lain', img: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=400&q=80', desc: 'Suka mendengarkan curhat kawan, mengajar, atau kegiatan sosial.' },
+            { id: 'm4', label: 'Sains & Eksperimen', img: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80', desc: 'Suka melakukan percobaan IPA, meneliti, dan memecahkan puzzle.' },
+            { id: 'm5', label: 'Bisnis & Kelola Usaha', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80', desc: 'Suka menjual barang, berhitung keuntungan, atau mengorganisir acara.' },
+            { id: 'm6', label: 'Teknik & Alat Praktis', img: 'https://images.unsplash.com/photo-1764115424769-ebdd2683d5a8?auto=format&fit=crop&w=800&q=85', desc: 'Suka merakit mesin, memperbaiki alat elektronik, atau membuat kerajinan.' }
+        ];
+
+        const kemampuanOptionsData = [
+            { id: 'k1', label: 'Berkomunikasi', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80', desc: 'Pandai menyampaikan ide dan berbicara dengan percaya diri.' },
+            { id: 'k2', label: 'Menggunakan Teknologi', img: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=400&q=80', desc: 'Cepat memahami software, aplikasi baru, dan perangkat keras.' },
+            { id: 'k3', label: 'Memecahkan Masalah', img: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=400&q=80', desc: 'Teliti menemukan jalan keluar dari situasi yang rumit.' },
+            { id: 'k4', label: 'Menggambar / Seni', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80', desc: 'Mahir mengekspresikan ide dalam bentuk karya seni visual.' },
+            { id: 'k5', label: 'Berhitung & Analisis', img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=400&q=80', desc: 'Teliti dalam mengolah data angka dan statistik matematika.' },
+            { id: 'k6', label: 'Praktik & Bekerja Sama', img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80', desc: 'Terampil melakukan kegiatan tangan dan kompak dalam tim.' }
+        ];
+
+        const nilaiOptionsData = [
+            { id: 'n1', label: 'Membantu Orang Lain', img: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=400&q=80', desc: 'Memberikan manfaat nyata bagi sesama manusia.' },
+            { id: 'n2', label: 'Kreativitas', img: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=400&q=80', desc: 'Kebebasan untuk mengekspresikan ide-ide unik baru.' },
+            { id: 'n3', label: 'Kemandirian', img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=80', desc: 'Dapat bekerja mandiri sesuai ritme yang disukai.' },
+            { id: 'n4', label: 'Kesejahteraan / Penghasilan', img: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=400&q=80', desc: 'Jaminan stabilitas finansial dan kehidupan yang berkecukupan.' },
+            { id: 'n5', label: 'Tantangan Baru', img: 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?auto=format&fit=crop&w=400&q=80', desc: 'Menyukai hal-hal baru yang memicu semangat juang.' },
+            { id: 'n6', label: 'Bekerja Sama (Teamwork)', img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80', desc: 'Membangun relasi dan sukses bersama rekan kerja.' }
+        ];
+
+        const gayaOptionsData = [
+            { id: 'g1', label: 'Bekerja Mandiri', img: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&w=400&q=80', desc: 'Lebih nyaman dan fokus saat bekerja sendiri di tempat tenang.' },
+            { id: 'g2', label: 'Bekerja Dalam Tim', img: 'https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=400&q=80', desc: 'Senang bertukar ide dan berbagi tugas bersama kawan.' },
+            { id: 'g3', label: 'Kegiatan Terstruktur', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=400&q=80', desc: 'Menyukai jadwal dan aturan yang jelas serta rapi.' },
+            { id: 'g4', label: 'Kegiatan Bebas & Kreatif', img: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=400&q=80', desc: 'Menyukai fleksibilitas tanpa terlalu banyak sekat aturan.' },
+            { id: 'g5', label: 'Pembelajaran Praktik', img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80', desc: 'Lebih cepat paham jika langsung memegang dan mencoba.' },
+            { id: 'g6', label: 'Pembelajaran Teori / Konsep', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80', desc: 'Senang membaca buku dan memahami rumus atau konsep dasar.' }
+        ];
+
+        // Career List
+        const careersList = [
+            { id: 1, name: 'Teknologi & Informasi', icon: '💻', desc: 'Programmer, UI/UX, Data Analyst', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80' },
+            { id: 2, name: 'Seni & Kreatif', icon: '🎨', desc: 'Desainer Grafis, Animator, Content Creator', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80' },
+            { id: 3, name: 'Sosial & Pendidikan', icon: '🧑‍🤝‍🧑', desc: 'Guru, Konselor, Pekerja Sosial', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' },
+            { id: 4, name: 'Kesehatan & Sains', icon: '🩺', desc: 'Dokter, Perawat, Analis Laboratorium', img: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=400&q=80' },
+            { id: 5, name: 'Bisnis & Kewirausahaan', icon: '💼', desc: 'Pengusaha, Pemasar, Administrasi', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80' },
+            { id: 6, name: 'Teknik & Keterampilan', icon: '⚙️', desc: 'Teknisi, Mekanik, Operator Industri', img: 'https://images.unsplash.com/photo-1747999610489-de5c0ad00e56?auto=format&fit=crop&w=800&q=85' }
+        ];
+
+        // Quiz Questions (8 Situational Questions)
+        const quizItems = [
+            { id: 1, q: "Sebelum menentukan sekolah lanjutan, langkah yang paling tepat adalah...", opts: ["A. Mengikuti pilihan teman", "B. Memilih sekolah paling terkenal", "C. Mengenali diri dan mencari informasi pilihan", "D. Mengikuti tren"], ans: "C" },
+            { id: 2, q: "Jika kamu tertarik pada bidang teknologi, langkah yang tepat adalah...", opts: ["A. Langsung memilih satu profesi mutlak", "B. Mencari info bidang teknologi & sekolah pendukungnya", "C. Mengikuti pilihan teman dekat", "D. Mengabaikan minat karena masih SMP"], ans: "B" },
+            { id: 3, q: "Manakah yang perlu dipertimbangkan dalam memilih sekolah lanjutan?", opts: ["A. Minat dan kemampuan diri", "B. Informasi resmi sekolah", "C. Tujuan pendidikan lanjutan", "D. Semua jawaban benar"], ans: "D" },
+            { id: 4, q: "Pernyataan yang paling tepat tentang pilihan karier adalah...", opts: ["A. Harus ditentukan mutlak sejak SMP", "B. Hanya ditentukan oleh nilai akademik saja", "C. Bekerja dan berkembang seiring waktu & pengalaman", "D. Ditentukan sepenuhnya oleh teman"], ans: "C" },
+            { id: 5, q: "Jika teman baikmu memilih SMK, kamu sebaiknya...", opts: ["A. Langsung ikut agar tidak kesepian", "B. Memilih sekolah yang sama walau tidak suka", "C. Mempertimbangkan pilihan berdasarkan tujuan sendiri", "D. Membatalkan sekolah lanjutan"], ans: "C" },
+            { id: 6, q: "Mengapa informasi sekolah perlu diperiksa dari sumber terpercaya?", opts: ["A. Agar dapat membandingkan informasi secara akurat", "B. Agar mengikuti sekolah viral di media sosial", "C. Agar terlihat keren di depan teman", "D. Agar tidak perlu bertanya kepada siapa pun"], ans: "A" },
+            { id: 7, q: "Setelah menemukan bidang karier menarik, langkah berikutnya adalah...", opts: ["A. Langsung menganggap pilihan akhir tanpa riset", "B. Mencari info lebih lanjut tentang jalur pendidikannya", "C. Menyerahkan keputusan penuh pada orang lain", "D. Tidak perlu melakukan apa-apa"], ans: "B" },
+            { id: 8, q: "Jika hasil eksplorasi menunjukkan minat pada suatu bidang, hasil tersebut sebaiknya...", opts: ["A. Dianggap sebagai keputusan final mutlak", "B. Digunakan sebagai bahan refleksi & eksplorasi lanjut", "C. Dijadikan diagnosis psikologis mutlak", "D. Menentukan sekolah secara otomatis tanpa diskusi"], ans: "B" }
+        ];
+
+        // Reflection Questions
+        const reflectionItems = [
+            "Apa hal baru yang kamu ketahui tentang dirimu dari eksplorasi ini?",
+            "Bidang karier apa yang paling menarik perhatianmu saat ini?",
+            "Mengapa bidang tersebut menarik bagimu?",
+            "Pilihan sekolah lanjutan (SMA/SMK/MA) apa yang ingin kamu cari tahu lebih lanjut?",
+            "Siapa orang (Guru BK / Orang Tua) yang akan kamu ajak berdiskusi minggu ini?"
+        ];
+
+        // Navigation Switch
+        function showSection(secId) {
+            const sections = ['home', 'kenalidir', 'karier', 'sekolah', 'hubungkan', 'path', 'kuis', 'refleksi', 'mynextstep'];
+            sections.forEach(s => {
+                const el = document.getElementById(`sec-${s}`);
+                if (el) el.classList.add('hidden');
+                
+                const btn = document.getElementById(`nav-${s}`);
+                if (btn) btn.classList.remove('bg-tealbrand-50', 'text-tealbrand-600');
+            });
+
+            const targetSec = document.getElementById(`sec-${secId}`);
+            if (targetSec) targetSec.classList.remove('hidden');
+
+            const targetBtn = document.getElementById(`nav-${secId}`);
+            if (targetBtn) targetBtn.classList.add('bg-tealbrand-50', 'text-tealbrand-600');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (secId === 'mynextstep') updateNextStepSummary();
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+
+        // --- KENALI DIRI WIZARD LOGIC ---
+        function renderKenaliDiriOptions() {
+            // Minat Options
+            const minatBox = document.getElementById('minat-options');
+            minatBox.innerHTML = minatOptionsData.map(item => `
+                <div id="card-${item.id}" onclick="selectMinatOption('${item.id}', '${item.label}')" class="option-card soft-card p-3 rounded-2xl cursor-pointer border border-slate-200 hover:border-tealbrand-500 transition">
+                    <img src="${item.img}" class="h-28 w-full object-cover rounded-xl mb-2" alt="${item.label}">
+                    <h4 class="font-bold text-slate-800 text-xs">${item.label}</h4>
+                    <p class="text-[10px] text-slate-500 mt-1">${item.desc}</p>
+                </div>
+            `).join('');
+
+            // Kemampuan Options
+            const kemampuanBox = document.getElementById('kemampuan-options');
+            kemampuanBox.innerHTML = kemampuanOptionsData.map(item => `
+                <div id="card-${item.id}" onclick="selectSingleOption('kemampuan', '${item.id}', '${item.label}', '${item.desc}')" class="option-card soft-card p-3 rounded-2xl cursor-pointer border border-slate-200 hover:border-skybrand-500 transition">
+                    <img src="${item.img}" class="h-28 w-full object-cover rounded-xl mb-2" alt="${item.label}">
+                    <h4 class="font-bold text-slate-800 text-xs">${item.label}</h4>
+                    <p class="text-[10px] text-slate-500 mt-1">${item.desc}</p>
+                </div>
+            `).join('');
+
+            // Nilai Options
+            const nilaiBox = document.getElementById('nilai-options');
+            nilaiBox.innerHTML = nilaiOptionsData.map(item => `
+                <div id="card-${item.id}" onclick="selectSingleOption('nilai', '${item.id}', '${item.label}', '${item.desc}')" class="option-card soft-card p-3 rounded-2xl cursor-pointer border border-slate-200 hover:border-indigobrand-500 transition">
+                    <img src="${item.img}" class="h-28 w-full object-cover rounded-xl mb-2" alt="${item.label}">
+                    <h4 class="font-bold text-slate-800 text-xs">${item.label}</h4>
+                    <p class="text-[10px] text-slate-500 mt-1">${item.desc}</p>
+                </div>
+            `).join('');
+
+            // Gaya Options
+            const gayaBox = document.getElementById('gaya-options');
+            gayaBox.innerHTML = gayaOptionsData.map(item => `
+                <div id="card-${item.id}" onclick="selectSingleOption('gaya', '${item.id}', '${item.label}', '${item.desc}')" class="option-card soft-card p-3 rounded-2xl cursor-pointer border border-slate-200 hover:border-purple-500 transition">
+                    <img src="${item.img}" class="h-28 w-full object-cover rounded-xl mb-2" alt="${item.label}">
+                    <h4 class="font-bold text-slate-800 text-xs">${item.label}</h4>
+                    <p class="text-[10px] text-slate-500 mt-1">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function selectMinatOption(id, label) {
+            const el = document.getElementById(`card-${id}`);
+            if (state.minat.includes(label)) {
+                state.minat = state.minat.filter(i => i !== label);
+                el.classList.remove('selected');
+            } else {
+                if (state.minat.length >= 3) {
+                    showToast('Maksimal memilih 3 minat!');
+                    return;
+                }
+                state.minat.push(label);
+                el.classList.add('selected');
+            }
+
+            const detailBox = document.getElementById('minat-detail-box');
+            const detailText = document.getElementById('minat-detail-text');
+            if (state.minat.length > 0) {
+                detailBox.classList.remove('hidden');
+                detailText.innerText = `Kamu memilih minat: ${state.minat.join(', ')}. Ini menunjukkan ketertarikanmu pada aktivitas tersebut!`;
+            } else {
+                detailBox.classList.add('hidden');
+            }
+        }
+
+        function selectSingleOption(type, id, label, desc) {
+            state[type] = label;
+            
+            // Clear previous selection in group
+            const optionsGroup = type === 'kemampuan' ? kemampuanOptionsData : (type === 'nilai' ? nilaiOptionsData : gayaOptionsData);
+            optionsGroup.forEach(item => {
+                const el = document.getElementById(`card-${item.id}`);
+                if (el) el.classList.remove('selected');
+            });
+
+            document.getElementById(`card-${id}`).classList.add('selected');
+
+            const detailBox = document.getElementById(`${type}-detail-box`);
+            const detailText = document.getElementById(`${type}-detail-text`);
+            detailBox.classList.remove('hidden');
+            detailText.innerText = `Pilihanmu: ${label} - ${desc}`;
+            showToast(`${type.toUpperCase()} terpilih!`);
+        }
+
+        function nextWizardStep(stepNum) {
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`wizard-step-${i}`).classList.add('hidden');
+                
+                const dot = document.getElementById(`step-dot-${i}`);
+                if (i <= stepNum) {
+                    dot.className = "flex items-center gap-2 text-tealbrand-600 font-bold";
+                    dot.querySelector('span').className = "w-7 h-7 rounded-full bg-tealbrand-600 text-white flex items-center justify-center font-bold";
+                } else {
+                    dot.className = "flex items-center gap-2 text-slate-400";
+                    dot.querySelector('span').className = "w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold";
+                }
+            }
+
+            document.getElementById(`wizard-step-${stepNum}`).classList.remove('hidden');
+
+            if (stepNum === 5) {
+                document.getElementById('summary-minat').innerText = state.minat.length > 0 ? state.minat.join(', ') : 'Belum memilih';
+                document.getElementById('summary-kemampuan').innerText = state.kemampuan || 'Belum memilih';
+                document.getElementById('summary-nilai').innerText = state.nilai || 'Belum memilih';
+                document.getElementById('summary-gaya').innerText = state.gaya || 'Belum memilih';
+            }
+        }
+
+        // --- CAREERS RENDER ---
+        function renderCareers() {
+            const container = document.getElementById('career-grid-cards');
+            container.innerHTML = careersList.map(c => `
+                <div onclick="openCareerModal(${c.id})" class="soft-card p-5 rounded-2xl cursor-pointer group hover:border-tealbrand-500 transition space-y-3">
+                    <img src="${c.img}" class="h-32 w-full object-cover rounded-xl" alt="${c.name}">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">${c.icon}</span>
+                        <h3 class="text-base font-bold text-slate-800 group-hover:text-tealbrand-600">${c.name}</h3>
+                    </div>
+                    <p class="text-xs text-slate-500">${c.desc}</p>
+                    <span class="inline-block text-[10px] font-bold text-tealbrand-600">Klik untuk detail & kuis mini →</span>
+                </div>
+            `).join('');
+        }
+
+        function openCareerModal(id) {
+            const c = careersList.find(i => i.id === id);
+            if (!c) return;
+
+            document.getElementById('modal-career-body').innerHTML = `
+                <div class="text-center space-y-2">
+                    <span class="text-4xl">${c.icon}</span>
+                    <h3 class="text-xl font-bold text-slate-800">${c.name}</h3>
+                    <p class="text-xs text-slate-500">${c.desc}</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl space-y-2 text-xs text-slate-600 mt-2">
+                    <p><strong>Ciri Aktivitas:</strong> Berhubungan dengan eksplorasi, kreasi, dan pemecahan masalah pada bidang ${c.name}.</p>
+                    <p><strong>Rekomendasi Jalur Sekolah:</strong> SMA (Jurusan Terkait) / SMK (Bidang Keahlian Terkait) / MA.</p>
+                </div>
+                <button onclick="closeCareerModal()" class="w-full py-2.5 bg-tealbrand-600 text-white rounded-xl font-semibold text-xs mt-3">Tutup Detail</button>
+            `;
+
+            document.getElementById('career-modal').classList.remove('hidden');
+        }
+
+        function closeCareerModal() {
+            document.getElementById('career-modal').classList.add('hidden');
+        }
+
+        function selectSchoolGoal(school) {
+            state.schoolGoal = school;
+            showToast(`Target sekolah ${school} disimpan!`);
+            showSection('hubungkan');
+        }
+
+        function savePathData() {
+            state.careerDream = document.getElementById('path-input-career').value;
+            state.schoolGoal = document.getElementById('path-select-school').value;
+            state.actionPlan = document.getElementById('path-input-action').value;
+            showToast('Data Career Path berhasil disimpan!');
+            showSection('kuis');
+        }
+
+        // --- QUIZ LOGIC ---
+        function renderQuiz() {
+            const container = document.getElementById('quiz-box');
+            container.innerHTML = quizItems.map((q, idx) => `
+                <div class="space-y-3 pb-4 border-b border-slate-100">
+                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">${idx + 1}. ${q.q}</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.opts.map(opt => {
+                            const optCode = opt.charAt(0);
+                            return `
+                                <button onclick="answerQuiz(${q.id}, '${optCode}')" id="qbtn-${q.id}-${optCode}" class="text-left p-3 rounded-xl border border-slate-200 text-xs text-slate-700 hover:border-tealbrand-500 hover:bg-tealbrand-50 transition">
+                                    ${opt}
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('') + `
+                <button onclick="finishQuiz()" class="w-full py-3 bg-tealbrand-600 text-white rounded-xl font-bold text-xs shadow-md">Selesai & Hitung Skor Kuis</button>
+            `;
+        }
+
+        function answerQuiz(qId, choice) {
+            state.quizAnswers[qId] = choice;
+            ['A', 'B', 'C', 'D'].forEach(c => {
+                const btn = document.getElementById(`qbtn-${qId}-${c}`);
+                if (btn) btn.classList.remove('border-tealbrand-600', 'bg-tealbrand-50', 'font-bold');
+            });
+            const selBtn = document.getElementById(`qbtn-${qId}-${choice}`);
+            if (selBtn) selBtn.classList.add('border-tealbrand-600', 'bg-tealbrand-50', 'font-bold');
+        }
+
+        function finishQuiz() {
+            const unanswered = quizItems.filter(q => !state.quizAnswers[q.id]);
+            if (unanswered.length > 0) {
+                showToast(`Masih ada ${unanswered.length} soal yang belum dijawab.`);
+                document.getElementById(`qbtn-${unanswered[0].id}-A`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            let correctCount = 0;
+            const wrong = [];
+            quizItems.forEach((q, idx) => {
+                const selected = state.quizAnswers[q.id];
+                if (selected === q.ans) {
+                    correctCount++;
+                } else {
+                    const selectedText = q.opts.find(o => o.startsWith(selected + '.')) || 'Tidak ditemukan';
+                    const correctText = q.opts.find(o => o.startsWith(q.ans + '.')) || q.ans;
+                    wrong.push({ number: idx + 1, question: q.q, selected: selectedText, correct: correctText });
+                }
+            });
+
+            const score = Number((correctCount / quizItems.length * 100).toFixed(1));
+            state.quizScore = score;
+            state.quizWrong = wrong;
+
+            const result = document.getElementById('quiz-result');
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <div class="quiz-result p-5 rounded-2xl border ${wrong.length === 0 ? 'border-tealbrand-200 bg-tealbrand-50' : 'border-amber-200 bg-amber-50'} space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Hasil Kuis</p>
+                            <h3 class="text-3xl font-extrabold text-slate-800 mt-1">${score}/100</h3>
+                            <p class="text-xs text-slate-600 mt-1">${correctCount} benar dari ${quizItems.length} soal.</p>
+                        </div>
+                        <div class="px-4 py-3 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700">${wrong.length === 0 ? 'Semua jawaban benar ✓' : `${wrong.length} jawaban perlu diperiksa`}</div>
+                    </div>
+                    ${wrong.length ? `
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-slate-800 text-sm">Bagian yang masih salah</h4>
+                            ${wrong.map(item => `
+                                <div class="bg-white border border-amber-200 rounded-xl p-4 space-y-2">
+                                    <p class="font-bold text-slate-800 text-xs">${item.number}. ${item.question}</p>
+                                    <p class="text-xs text-red-700"><strong>Jawabanmu:</strong> ${item.selected}</p>
+                                    <p class="text-xs text-tealbrand-800"><strong>Jawaban yang benar:</strong> ${item.correct}</p>
+                                </div>
+                            `).join('')}
+                        </div>` : `
+                        <p class="text-xs text-tealbrand-800 font-medium">Hebat! Semua jawabanmu benar. Kamu sudah memahami dasar perencanaan karier dan sekolah lanjutan.</p>
+                    `}
+                </div>`;
+
+            showToast(`Kuis selesai! Skor: ${score}/100`);
+            result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // --- REFLECTION RENDER ---
+        function renderReflections() {
+            const container = document.getElementById('reflection-container');
+            container.innerHTML = `
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm">Identitas Siswa</h3>
+                        <p class="text-[11px] text-slate-500 mt-1">Isi nama dan kelas agar lembar hasil dapat dikenali saat dicetak dan dikumpulkan kepada Guru BK.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label for="student-name" class="block text-xs font-bold text-slate-700">Nama</label>
+                            <input id="student-name" type="text" value="${state.studentName}" oninput="state.studentName = this.value" placeholder="Masukkan nama lengkap" class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="student-class" class="block text-xs font-bold text-slate-700">Kelas</label>
+                            <input id="student-class" type="text" value="${state.studentClass}" oninput="state.studentClass = this.value" placeholder="Contoh: IX A" class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-800 text-sm">Refleksi</h3>
+                    <p class="text-[11px] text-slate-500 mt-1">Tuliskan jawabanmu dengan jujur sesuai hasil eksplorasi yang sudah kamu lakukan.</p>
+                </div>
+
+                ${reflectionItems.map((ref, idx) => `
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700">${idx + 1}. ${ref}</label>
+                        <textarea rows="2" onchange="state.reflections[${idx}] = this.value" placeholder="Tuliskan refleksimu di sini..." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-tealbrand-500 focus:outline-none">${state.reflections[idx] || ''}</textarea>
+                    </div>
+                `).join('')}
+
+                <button onclick="if (!state.studentName.trim() || !state.studentClass.trim()) { showToast('Isi nama dan kelas terlebih dahulu.'); return; } showToast('Refleksi tersimpan!'); showSection('mynextstep');" class="w-full py-3 bg-tealbrand-600 text-white rounded-xl font-bold text-xs shadow-md">Simpan Refleksi & Lihat Lembar Next Step</button>
+            `;
+        }
+
+        // --- SUMMARY & PRINT UPDATE ---
+        function updateNextStepSummary() {
+            document.getElementById('print-date').innerText = `Tanggal: ${new Date().toLocaleDateString('id-ID')}`;
+            document.getElementById('res-student-name').innerText = state.studentName || 'Belum diisi';
+            document.getElementById('res-student-class').innerText = state.studentClass || 'Belum diisi';
+            document.getElementById('res-minat').innerText = `Minat: ${state.minat.length > 0 ? state.minat.join(', ') : 'Belum diisi'}`;
+            document.getElementById('res-kemampuan').innerText = `Kemampuan: ${state.kemampuan || 'Belum diisi'}`;
+            document.getElementById('res-nilai').innerText = `Nilai Diri: ${state.nilai || 'Belum diisi'}`;
+            document.getElementById('res-gaya').innerText = `Gaya Diri: ${state.gaya || 'Belum diisi'}`;
+
+            document.getElementById('res-career').innerText = `Bidang Karier Impian: ${state.careerDream || 'Belum diisi'}`;
+            document.getElementById('res-school').innerText = `Rencana Sekolah Lanjutan: ${state.schoolGoal || 'Belum diisi'}`;
+            document.getElementById('res-action').innerText = `Langkah Pertama Bulan Ini: ${state.actionPlan || 'Belum diisi'}`;
+
+            const qCount = Object.keys(state.quizAnswers).length;
+            document.getElementById('res-quiz-score').innerText = state.quizScore !== null
+                ? `Skor ${state.quizScore}/100 (${quizItems.length - state.quizWrong.length} benar dari ${quizItems.length} soal).`
+                : (qCount > 0 ? `Telah menjawab ${qCount} dari ${quizItems.length} soal kuis situasional.` : 'Belum mengerjakan kuis.');
+        }
+
+        // On Load Initializer
+        window.onload = function() {
+            renderKenaliDiriOptions();
+            renderCareers();
+            renderQuiz();
+            renderReflections();
+            showSection('home');
+        };
+    </script>
+</body>
+</html>
